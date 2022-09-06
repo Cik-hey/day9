@@ -40,4 +40,20 @@ public class CompanyRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Company addNewCompany(Company newCompany) {
+        Integer newCompanyId = getNewCompanyId();
+        newCompany.setIdNumber(newCompanyId);
+        companyList.add(newCompany);
+        return newCompany;
+    }
+
+    private Integer getNewCompanyId() {
+        int maxIdNumber = companyList.stream()
+                .mapToInt(Company::getIdNumber)
+                .max()
+                .orElse(1);
+
+        return maxIdNumber + 1;
+    }
 }
