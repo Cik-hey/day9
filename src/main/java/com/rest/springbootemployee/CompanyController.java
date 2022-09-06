@@ -1,5 +1,6 @@
 package com.rest.springbootemployee;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,10 @@ public class CompanyController {
     @PostMapping
     public Company addCompany(@RequestBody Company company) {
         return companyRepository.addNewCompany(company);
+    }
+
+    @PutMapping("/{idNumber}")
+    public Company updateCompany(@PathVariable Integer idNumber, @RequestBody Company company) {
+        return companyRepository.updateCompanyInformation(idNumber, company);
     }
 }

@@ -56,4 +56,12 @@ public class CompanyRepository {
 
         return maxIdNumber + 1;
     }
+
+    public Company updateCompanyInformation(Integer idNumber, Company company) {
+        Company existingCompany = getCompanyById(idNumber);
+        if (!company.getName().equals(null)) {
+            existingCompany.setName(company.getName());
+        }
+        return company;
+    }
 }
