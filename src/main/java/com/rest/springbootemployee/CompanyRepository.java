@@ -64,4 +64,9 @@ public class CompanyRepository {
         }
         return company;
     }
+
+    public void removeCompany(Integer idNumber) {
+        Company companyToBeDeleted = getCompanyById(idNumber);
+        companyList.remove(companyToBeDeleted);
+    }
 }
