@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
@@ -31,5 +32,12 @@ public class CompanyRepository {
     public List<Employee> getSpecificCompanyEmployees(Integer idNumber) {
         Company specificCompany = getCompanyById(idNumber);
         return specificCompany.getEmployeeList();
+    }
+
+    public List<Company> getCompanyListByPage(int page, int pageSize) {
+        return companyList.stream()
+                .skip((long) (page - 1) * pageSize )
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
