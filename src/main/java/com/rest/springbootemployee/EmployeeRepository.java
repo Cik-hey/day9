@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
+
     List<Employee> employeeList;
 
     public EmployeeRepository() {
@@ -69,5 +70,9 @@ public class EmployeeRepository {
                 .skip((long) (page - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
     }
 }
