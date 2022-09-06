@@ -1,9 +1,6 @@
 package com.rest.springbootemployee;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,10 @@ public class EmployeeController {
     @GetMapping("/{idNumber}")
     public Employee getById(@PathVariable Integer idNumber) {
         return employeeRepository.findById(idNumber);
+    }
+
+    @GetMapping(params = {"gender"})
+    public List<Employee> getAllByGender(@RequestParam String gender) {
+        return employeeRepository.getAllByGender(gender);
     }
 }
