@@ -36,6 +36,7 @@ public class CompanyController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody Company company) {
         return companyRepository.addNewCompany(company);
     }
