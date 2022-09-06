@@ -1,4 +1,6 @@
-package com.rest.springbootemployee;
+package com.rest.springbootemployee.company;
+
+import com.rest.springbootemployee.employee.Employee;
 
 import java.util.List;
 

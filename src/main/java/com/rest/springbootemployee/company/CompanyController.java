@@ -1,5 +1,6 @@
-package com.rest.springbootemployee;
+package com.rest.springbootemployee.company;
 
+import com.rest.springbootemployee.employee.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

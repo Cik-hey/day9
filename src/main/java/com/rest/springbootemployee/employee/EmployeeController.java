@@ -1,4 +1,4 @@
-package com.rest.springbootemployee;
+package com.rest.springbootemployee.employee;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

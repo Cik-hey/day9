@@ -1,5 +1,6 @@
-package com.rest.springbootemployee;
+package com.rest.springbootemployee.employee;
 
+import com.rest.springbootemployee.exceptionlist.NoEmployeeFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
 
-    List<Employee> employeeList;
+    public List<Employee> employeeList;
 
     public EmployeeRepository() {
         employeeList = new ArrayList<>();

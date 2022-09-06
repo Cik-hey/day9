@@ -1,4 +1,4 @@
-package com.rest.springbootemployee;
+package com.rest.springbootemployee.employee;
 
 public class Employee {
     private Integer idNumber;
