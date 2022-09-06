@@ -47,4 +47,15 @@ public class EmployeeRepository {
                 .orElse(1);
         return ++maxId;
     }
+
+    public Employee updateEmployeeInformation(Integer idNumber, Employee employee) {
+        Employee existingEmployee = findById(employee.getIdNumber());
+        if (employee.getAge() != null) {
+            existingEmployee.setAge(employee.getAge());
+        }
+        if (employee.getSalary() != null) {
+            existingEmployee.setSalary(employee.getSalary());
+        }
+        return existingEmployee;
+    }
 }
