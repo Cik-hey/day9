@@ -19,4 +19,10 @@ public class EmployeeRepository {
     public List<Employee> getAll() {
         return employeeList;
     }
+
+    public Employee findById(Integer idNumber) {
+        return employeeList.stream().filter(employee -> employee.getIdNumber().equals(idNumber))
+                .findFirst()
+                .orElseThrow(NoEmployeeFoundException::new);
+    }
 }

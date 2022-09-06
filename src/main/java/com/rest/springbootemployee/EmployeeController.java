@@ -20,4 +20,9 @@ public class EmployeeController {
     public List<Employee> getEmployeeList() {
         return employeeRepository.getAll();
     }
+
+    @GetMapping("/{idNumber}")
+    public Employee getById(@PathVariable Integer idNumber) {
+        return employeeRepository.findById(idNumber);
+    }
 }
