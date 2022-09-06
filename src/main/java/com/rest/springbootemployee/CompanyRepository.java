@@ -20,4 +20,11 @@ public class CompanyRepository {
     public List<Company> getCompanyList() {
         return companyList;
     }
+
+    public Company getCompanyById(Integer idNumber) {
+        return companyList.stream()
+                .filter(company->company.getIdNumber().equals(idNumber))
+                .findFirst()
+                .orElseThrow(NoCompanyFoundException::new);
+    }
 }

@@ -1,6 +1,7 @@
 package com.rest.springbootemployee;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,10 @@ public class CompanyController {
     @GetMapping
     public List<Company> getCompanyList() {
         return companyRepository.getCompanyList();
+    }
+
+    @GetMapping("/{idNumber}")
+    public Company getSpecificCompany(@PathVariable Integer idNumber) {
+        return companyRepository.getCompanyById(idNumber);
     }
 }
