@@ -6,18 +6,19 @@ public class Company {
     private Integer idNumber;
     private String name;
     private List<Employee> employeeList;
+
     public Company(Integer idNumber, String name, List<Employee> employeeList) {
         this.idNumber = idNumber;
         this.name = name;
         this.employeeList = employeeList;
     }
 
-    public void setIdNumber(Integer idNumber) {
-        this.idNumber = idNumber;
-    }
-
     public Integer getIdNumber() {
         return idNumber;
+    }
+
+    public void setIdNumber(Integer idNumber) {
+        this.idNumber = idNumber;
     }
 
     public String getName() {

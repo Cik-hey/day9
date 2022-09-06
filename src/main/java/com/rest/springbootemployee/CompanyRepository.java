@@ -1,7 +1,6 @@
 package com.rest.springbootemployee;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class CompanyRepository {
 
     public Company getCompanyById(Integer idNumber) {
         return companyList.stream()
-                .filter(company->company.getIdNumber().equals(idNumber))
+                .filter(company -> company.getIdNumber().equals(idNumber))
                 .findFirst()
                 .orElseThrow(NoCompanyFoundException::new);
     }
@@ -36,7 +35,7 @@ public class CompanyRepository {
 
     public List<Company> getCompanyListByPage(int page, int pageSize) {
         return companyList.stream()
-                .skip((long) (page - 1) * pageSize )
+                .skip((long) (page - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
