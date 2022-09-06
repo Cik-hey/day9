@@ -39,4 +39,10 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable Integer idNumber, @RequestBody Employee employee) {
         return employeeRepository.updateEmployeeInformation(idNumber, employee);
     }
+
+    @DeleteMapping("/{idNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable Integer idNumber) {
+        employeeRepository.removeEmployeeInformation(idNumber);
+    }
 }
