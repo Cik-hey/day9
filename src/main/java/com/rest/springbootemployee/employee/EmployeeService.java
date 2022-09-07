@@ -1,6 +1,5 @@
 package com.rest.springbootemployee.employee;
 
-
 import java.util.List;
 
 public class EmployeeService {
@@ -15,4 +14,14 @@ public class EmployeeService {
         return employeeRepository.getAll();
     }
 
+    public Employee updateEmployee(Integer id, Employee employee) {
+        Employee existingEmployee = employeeRepository.findById(id);
+        if (employee.getAge() != null) {
+            existingEmployee.setAge(employee.getAge());
+        }
+        if (employee.getSalary() != null) {
+            existingEmployee.setSalary(employee.getSalary());
+        }
+        return existingEmployee;
+    }
 }

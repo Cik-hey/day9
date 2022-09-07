@@ -52,17 +52,6 @@ public class EmployeeRepository {
         return ++maxId;
     }
 
-    public Employee updateEmployeeInformation(Integer id, Employee employee) {
-        Employee existingEmployee = findById(employee.getid());
-        if (employee.getAge() != null) {
-            existingEmployee.setAge(employee.getAge());
-        }
-        if (employee.getSalary() != null) {
-            existingEmployee.setSalary(employee.getSalary());
-        }
-        return existingEmployee;
-    }
-
     public void removeEmployeeInformation(Integer id) {
         Employee employeeToBeRemoved = findById(id);
         employeeList.remove(employeeToBeRemoved);
