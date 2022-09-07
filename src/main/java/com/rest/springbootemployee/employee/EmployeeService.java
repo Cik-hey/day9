@@ -1,7 +1,11 @@
 package com.rest.springbootemployee.employee;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
 public class EmployeeService {
 
     EmployeeRepository employeeRepository;
@@ -27,5 +31,9 @@ public class EmployeeService {
 
     public Employee findById(Integer id) {
         return employeeRepository.findById(id);
+    }
+
+    public List<Employee> getAllByGender(String gender) {
+        return employeeRepository.getAllByGender(gender);
     }
 }

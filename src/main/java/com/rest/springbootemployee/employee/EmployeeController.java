@@ -28,7 +28,7 @@ public class EmployeeController {
 
     @GetMapping(params = {"gender"})
     public List<Employee> getAllByGender(@RequestParam String gender) {
-        return employeeRepository.getAllByGender(gender);
+        return employeeService.getAllByGender(gender);
     }
 
     @PostMapping()
