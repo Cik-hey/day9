@@ -58,4 +58,19 @@ public class EmployeeServiceTest {
         assertThat(updatedEmployee.getGender(), equalTo("female"));
         assertThat(updatedEmployee.getSalary(), equalTo(4812345));
     }
+
+    @Test
+    void should_return_employee_when_get_by_id_given_employees() {
+        //Given
+        final int employeeId = 1;
+        Employee employee = new Employee(employeeId, "Kate", 17, "female", 4801112);
+
+        //When
+        when(employeeRepository.findById(employeeId)).thenReturn(employee);
+        Employee returnedEmployee = employeeService.findById(employeeId);
+
+        //Then
+        verify(employeeRepository).findById(employeeId);
+        assertThat(returnedEmployee, equalTo(returnedEmployee));
+    }
 }
