@@ -63,4 +63,21 @@ public class CompanyServiceTest {
         verify(companyRepository).getCompanyById(companyId);
         assertThat(returnedCompany, equalTo(company));
     }
+
+    @Test
+    void should_return_company_employees_list_when_get_employees_by_company_id_given_companies() {
+        //Given
+        final int companyId = 1;
+        List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
+                                                    new Employee(2, "Aedrian", 20, "male", 480111));
+
+        //When
+        when(companyRepository.getSpecificCompanyEmployees(companyId)).thenReturn(employeeList);
+        List<Employee> returnedCompanyEmployeesList = companyService.getSpecificCompanyEmployees(companyId);
+
+        //Then
+        verify(companyRepository).getSpecificCompanyEmployees(companyId);
+        assertThat(returnedCompanyEmployeesList, hasSize(2));
+        assertThat(returnedCompanyEmployeesList, equalTo(employeeList));
+    }
 }

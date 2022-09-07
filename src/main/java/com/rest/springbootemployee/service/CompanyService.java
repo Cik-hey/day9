@@ -1,6 +1,7 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exceptionlist.NoCompanyFoundException;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,9 @@ public class CompanyService {
 
     public Company getCompanyById(Integer id) {
         return companyRepository.getCompanyById(id);
+    }
+
+    public List<Employee> getSpecificCompanyEmployees(Integer id) {
+        return companyRepository.getSpecificCompanyEmployees(id);
     }
 }

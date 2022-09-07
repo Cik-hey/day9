@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -67,5 +68,20 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("KLab"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeList", hasSize(2)));
+    }
+
+    @Test
+    void should_return_company_employees_list_when_get_employees_by_company_id_given_companies() throws Exception {
+        //Given
+        companyRepository.addNewCompany(new Company(1, "Mihoyo", null));
+        Company returnedCompany = companyRepository.addNewCompany(new Company(2, "KLab", employeeList));
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", returnedCompany.getid()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Kate", "Aedrian")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].age", containsInAnyOrder(17, 20)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender", containsInAnyOrder("female", "male")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary", containsInAnyOrder(480111, 4801112)));
     }
 }
