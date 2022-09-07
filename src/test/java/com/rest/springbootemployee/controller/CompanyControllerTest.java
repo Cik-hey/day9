@@ -43,8 +43,7 @@ public class CompanyControllerTest {
     @Test
     void should_return_company_list_when_get_given_companies() throws Exception {
         //Given
-        companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
-        String companyJSON = new ObjectMapper().writeValueAsString(employeeList.get(0));
+        companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/companies"))
@@ -56,8 +55,8 @@ public class CompanyControllerTest {
     @Test
     void should_return_company_when_get_by_id_given_companies() throws Exception {
         //Given
-        companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
-        Company returnedCompany = companyRepository.addNewCompany(new Company(2, "KLab", employeeList));
+        companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        Company returnedCompany = companyService.addNewCompany(new Company(2, "KLab", employeeList));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/companies/{id}", returnedCompany.getid()))
@@ -69,8 +68,8 @@ public class CompanyControllerTest {
     @Test
     void should_return_company_employees_list_when_get_employees_by_company_id_given_companies() throws Exception {
         //Given
-        companyRepository.addNewCompany(new Company(1, "Mihoyo", null));
-        Company returnedCompany = companyRepository.addNewCompany(new Company(2, "KLab", employeeList));
+        companyService.addNewCompany(new Company(1, "Mihoyo", null));
+        Company returnedCompany = companyService.addNewCompany(new Company(2, "KLab", employeeList));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", returnedCompany.getid()))
@@ -84,9 +83,9 @@ public class CompanyControllerTest {
     @Test
     void should_return_company_list_when_get_by_page_given_companies() throws Exception {
         //Given
-        companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
-        companyRepository.addNewCompany(new Company(2, "KLab", employeeList));
-        companyRepository.addNewCompany(new Company(2, "Cerberus", employeeList));
+        companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        companyService.addNewCompany(new Company(2, "KLab", employeeList));
+        companyService.addNewCompany(new Company(2, "Cerberus", employeeList));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/companies?page={page}&pageSize={pageSize}", 1, 2))
@@ -98,7 +97,7 @@ public class CompanyControllerTest {
     @Test
     void should_return_new_company_when_post_given_new_company() throws Exception {
         //Given
-        Company newCompany = companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        Company newCompany = companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
         String newCompanyJSON = new ObjectMapper().writeValueAsString(newCompany);
 
         //When and Then
@@ -113,7 +112,7 @@ public class CompanyControllerTest {
     @Test
     void should_return_updated_company_when_put_given_new_company_information() throws Exception {
         //Given
-        Company newCompany = companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        Company newCompany = companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
         Company updatedCompany = new Company(1, "Cerberus", employeeList);
         String updatedCompanyJSON = new ObjectMapper().writeValueAsString(updatedCompany);
 
@@ -128,12 +127,12 @@ public class CompanyControllerTest {
     @Test
     void should_remove_company_when_delete_given_company_id() throws Exception {
         //Given
-        Company companyToBeDeleted = companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        Company companyToBeDeleted = companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.delete("/companies/{id}", companyToBeDeleted.getid()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        assertThat(companyRepository.getCompanyList(), empty());
+        assertThat(companyService.getCompanyList(), empty());
     }
 }
