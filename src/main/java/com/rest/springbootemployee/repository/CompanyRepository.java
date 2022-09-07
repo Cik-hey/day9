@@ -71,4 +71,8 @@ public class CompanyRepository {
         Company companyToBeDeleted = getCompanyById(id);
         companyList.remove(companyToBeDeleted);
     }
+
+    public void clearData() {
+        companyList = new ArrayList<>();
+    }
 }

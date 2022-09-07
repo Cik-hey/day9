@@ -3,6 +3,7 @@ package com.rest.springbootemployee.controller;
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.repository.CompanyRepository;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +14,15 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyRepository companyRepository;
-
-    public CompanyController(CompanyRepository companyRepository) {
+    private CompanyService companyService;
+    public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
         this.companyRepository = companyRepository;
+        this.companyService = companyService;
     }
 
     @GetMapping
     public List<Company> getCompanyList() {
-        return companyRepository.getCompanyList();
+        return companyService.getCompanyList();
     }
 
     @GetMapping("/{id}")
