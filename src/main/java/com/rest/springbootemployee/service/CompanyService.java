@@ -7,6 +7,7 @@ import com.rest.springbootemployee.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
@@ -26,5 +27,9 @@ public class CompanyService {
 
     public List<Employee> getSpecificCompanyEmployees(Integer id) {
         return companyRepository.getSpecificCompanyEmployees(id);
+    }
+
+    public List<Company> getCompanyListByPage(int page, int pageSize) {
+        return companyRepository.getCompanyListByPage(page, pageSize);
     }
 }

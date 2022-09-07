@@ -84,4 +84,18 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender", containsInAnyOrder("female", "male")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary", containsInAnyOrder(480111, 4801112)));
     }
+
+    @Test
+    void should_return_company_list_when_get_by_page_given_companies() throws Exception {
+        //Given
+        companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        companyRepository.addNewCompany(new Company(2, "KLab", employeeList));
+        companyRepository.addNewCompany(new Company(2, "Cerberus", employeeList));
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.get("/companies?page={page}&pageSize={pageSize}", 1,2))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Mihoyo", "KLab")));
+    }
 }
