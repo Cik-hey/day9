@@ -90,4 +90,19 @@ public class EmployeeServiceTest {
         assertThat(returnedEmployeeList, hasSize(2));
         assertThat(returnedEmployeeList, equalTo(employeeList));
     }
+
+    @Test
+    void should_return_updated_employee_when_put_given_new_employee() {
+        //Given
+        Employee newEmployee = new Employee(1, "Kate", 17, "female", 4801112);
+        Employee createdEmployee = new Employee(1, "Kate", 17, "female", 4801112);
+
+        //When
+        when(employeeRepository.addNewEmployee(newEmployee)).thenReturn(createdEmployee);
+        Employee returnedEmployee = employeeService.addNewEmployee(newEmployee);
+
+        //Then
+        verify(employeeRepository).addNewEmployee(newEmployee);
+        assertThat(returnedEmployee, equalTo(createdEmployee));
+    }
 }
