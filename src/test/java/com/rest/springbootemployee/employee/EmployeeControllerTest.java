@@ -152,5 +152,17 @@ public class EmployeeControllerTest {
         assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
     }
 
+    @Test
+    void should_remove_employee_when_delete_given_employee_id() throws Exception {
+        //Given
+        employeeRepository.addNewEmployee(new Employee(1, "Kate", 17, "female", 4801112));
+
+        //When
+        client.perform(MockMvcRequestBuilders.delete("/employees/{id}", 2))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        //Then
+        assertThat(employeeRepository.getAll(), empty());
+    }
 }
 
