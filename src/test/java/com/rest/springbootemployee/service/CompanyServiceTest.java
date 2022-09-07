@@ -135,4 +135,16 @@ public class CompanyServiceTest {
         verify(companyRepository).getCompanyById(companyId);
         assertThat(returnedCompany, equalTo(updatedCompany));
     }
+
+    @Test
+    void should_remove_company_when_delete_given_company_id() {
+        //Given
+        final int companyId = 1;
+
+        //When
+        companyService.removeCompany(companyId);
+
+        //Then
+        verify(companyRepository).removeCompany(companyId);
+    }
 }

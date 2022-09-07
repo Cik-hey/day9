@@ -44,4 +44,8 @@ public class CompanyService {
         }
         return existingCompany;
     }
+
+    public void removeCompany(Integer id) {
+        companyRepository.removeCompany(id);
+    }
 }

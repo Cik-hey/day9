@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
@@ -128,5 +128,17 @@ public class CompanyControllerTest {
                         .content(updatedCompanyJSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Cerberus"));
+    }
+
+    @Test
+    void should_remove_company_when_delete_given_company_id() throws Exception {
+        //Given
+        Company companyToBeDeleted = companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.delete("/companies/{id}", companyToBeDeleted.getid()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        assertThat(companyRepository.getCompanyList(), empty());
     }
 }
