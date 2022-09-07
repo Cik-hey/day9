@@ -16,23 +16,23 @@ public class CompanyRepository {
     public CompanyRepository() {
         companyList = new ArrayList<>();
         EmployeeRepository employeeRepository = new EmployeeRepository();
-        companyList.add(new Company(1, "Mihoyo", employeeRepository.employeeList));
-        companyList.add(new Company(2, "KLab", employeeRepository.employeeList));
+        companyList.add(new Company(1, "Mihoyo", employeeRepository.getEmployeeList()));
+        companyList.add(new Company(2, "KLab", employeeRepository.getEmployeeList()));
     }
 
     public List<Company> getCompanyList() {
         return companyList;
     }
-
-    public Company getCompanyById(Integer idNumber) {
+    
+    public Company getCompanyById(Integer id) {
         return companyList.stream()
-                .filter(company -> company.getIdNumber().equals(idNumber))
+                .filter(company -> company.getid().equals(id))
                 .findFirst()
                 .orElseThrow(NoCompanyFoundException::new);
     }
 
-    public List<Employee> getSpecificCompanyEmployees(Integer idNumber) {
-        Company specificCompany = getCompanyById(idNumber);
+    public List<Employee> getSpecificCompanyEmployees(Integer id) {
+        Company specificCompany = getCompanyById(id);
         return specificCompany.getEmployeeList();
     }
 
@@ -45,30 +45,30 @@ public class CompanyRepository {
 
     public Company addNewCompany(Company newCompany) {
         Integer newCompanyId = getNewCompanyId();
-        newCompany.setIdNumber(newCompanyId);
+        newCompany.setid(newCompanyId);
         companyList.add(newCompany);
         return newCompany;
     }
 
     private Integer getNewCompanyId() {
-        int maxIdNumber = companyList.stream()
-                .mapToInt(Company::getIdNumber)
+        int maxId = companyList.stream()
+                .mapToInt(Company::getid)
                 .max()
                 .orElse(1);
 
-        return maxIdNumber + 1;
+        return maxId + 1;
     }
 
-    public Company updateCompanyInformation(Integer idNumber, Company company) {
-        Company existingCompany = getCompanyById(idNumber);
-        if (!company.getName().equals(null)) {
+    public Company updateCompanyInformation(Integer id, Company company) {
+        Company existingCompany = getCompanyById(id);
+        if (company.getName() != null) {
             existingCompany.setName(company.getName());
         }
         return company;
     }
 
-    public void removeCompany(Integer idNumber) {
-        Company companyToBeDeleted = getCompanyById(idNumber);
+    public void removeCompany(Integer id) {
+        Company companyToBeDeleted = getCompanyById(id);
         companyList.remove(companyToBeDeleted);
     }
 }

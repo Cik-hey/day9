@@ -1,14 +1,14 @@
 package com.rest.springbootemployee.employee;
 
 public class Employee {
-    private Integer idNumber;
+    private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Integer salary;
 
-    public Employee(Integer idNumber, String name, Integer age, String gender, Integer salary) {
-        this.idNumber = idNumber;
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -16,12 +16,12 @@ public class Employee {
     }
 
 
-    public Integer getIdNumber() {
-        return idNumber;
+    public Integer getid() {
+        return id;
     }
 
-    public void setIdNumber(Integer idNumber) {
-        this.idNumber = idNumber;
+    public void setid(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

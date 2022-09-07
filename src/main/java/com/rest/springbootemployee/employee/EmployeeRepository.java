@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
 
-    public List<Employee> employeeList;
+    private final List<Employee> employeeList;
 
     public EmployeeRepository() {
         employeeList = new ArrayList<>();
@@ -23,8 +23,9 @@ public class EmployeeRepository {
         return employeeList;
     }
 
-    public Employee findById(Integer idNumber) {
-        return employeeList.stream().filter(employee -> employee.getIdNumber().equals(idNumber))
+    public Employee findById(Integer id) {
+        return employeeList.stream()
+                .filter(employee -> employee.getid().equals(id))
                 .findFirst()
                 .orElseThrow(NoEmployeeFoundException::new);
     }
@@ -37,21 +38,21 @@ public class EmployeeRepository {
 
     public Employee addNewEmployee(Employee newEmployee) {
         Integer newEmployeeId = generateNextId();
-        newEmployee.setIdNumber(newEmployeeId);
+        newEmployee.setid(newEmployeeId);
         employeeList.add(newEmployee);
         return newEmployee;
     }
 
     private Integer generateNextId() {
         int maxId = employeeList.stream()
-                .mapToInt(Employee::getIdNumber)
+                .mapToInt(Employee::getid)
                 .max()
                 .orElse(1);
         return ++maxId;
     }
 
-    public Employee updateEmployeeInformation(Integer idNumber, Employee employee) {
-        Employee existingEmployee = findById(employee.getIdNumber());
+    public Employee updateEmployeeInformation(Integer id, Employee employee) {
+        Employee existingEmployee = findById(employee.getid());
         if (employee.getAge() != null) {
             existingEmployee.setAge(employee.getAge());
         }
@@ -61,8 +62,8 @@ public class EmployeeRepository {
         return existingEmployee;
     }
 
-    public void removeEmployeeInformation(Integer idNumber) {
-        Employee employeeToBeRemoved = findById(idNumber);
+    public void removeEmployeeInformation(Integer id) {
+        Employee employeeToBeRemoved = findById(id);
         employeeList.remove(employeeToBeRemoved);
     }
 

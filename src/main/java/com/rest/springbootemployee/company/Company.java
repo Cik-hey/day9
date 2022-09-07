@@ -5,22 +5,22 @@ import com.rest.springbootemployee.employee.Employee;
 import java.util.List;
 
 public class Company {
-    private Integer idNumber;
+    private Integer id;
     private String name;
     private List<Employee> employeeList;
 
-    public Company(Integer idNumber, String name, List<Employee> employeeList) {
-        this.idNumber = idNumber;
+    public Company(Integer id, String name, List<Employee> employeeList) {
+        this.id = id;
         this.name = name;
         this.employeeList = employeeList;
     }
 
-    public Integer getIdNumber() {
-        return idNumber;
+    public Integer getid() {
+        return id;
     }
 
-    public void setIdNumber(Integer idNumber) {
-        this.idNumber = idNumber;
+    public void setid(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
