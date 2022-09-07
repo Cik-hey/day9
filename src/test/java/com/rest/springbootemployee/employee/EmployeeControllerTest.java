@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -43,6 +44,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("female"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(480111));
     }
+
     @Test
     void should_return_employee_when_get_by_id_given_employees() throws Exception {
         //Given
@@ -56,5 +58,21 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(17))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("female"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(480111));
+    }
+
+    @Test
+    void should_return_employee_list_when_get_by_gender_given_employees() throws Exception {
+        //Given
+        employeeRepository.addNewEmployee(new Employee(1, "Kate", 17, "female", 480111));
+        employeeRepository.addNewEmployee(new Employee(2, "Aedrian", 17, "male", 480111));
+        employeeRepository.addNewEmployee(new Employee(3, "Someone", 19, "male", 90111));
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.get("/employees?gender={gender}", "male"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Aedrian", "Someone")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].age", containsInAnyOrder(19, 17)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender", containsInAnyOrder("male", "male")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary", containsInAnyOrder(90111, 480111)));
     }
 }
