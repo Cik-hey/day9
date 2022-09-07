@@ -1,9 +1,10 @@
-package com.rest.springbootemployee.employee;
+package com.rest.springbootemployee.service;
 
+import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {

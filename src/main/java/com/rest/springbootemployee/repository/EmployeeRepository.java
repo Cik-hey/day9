@@ -1,5 +1,6 @@
-package com.rest.springbootemployee.employee;
+package com.rest.springbootemployee.repository;
 
+import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exceptionlist.NoEmployeeFoundException;
 import org.springframework.stereotype.Repository;
 
