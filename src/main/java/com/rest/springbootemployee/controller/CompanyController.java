@@ -48,7 +48,7 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     public Company updateCompany(@PathVariable Integer id, @RequestBody Company company) {
-        return companyRepository.updateCompanyInformation(id, company);
+        return companyService.updateCompanyInformation(id, company);
     }
 
     @DeleteMapping("/{id}")

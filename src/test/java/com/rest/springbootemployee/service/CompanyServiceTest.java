@@ -117,4 +117,22 @@ public class CompanyServiceTest {
         verify(companyRepository).addNewCompany(newCompany);
         assertThat(returnedCompany, equalTo(createdCompany));
     }
+
+    @Test
+    void should_return_updated_company_when_put_given_new_company_information() {
+        //Given
+        final int companyId = 1;
+        List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
+                                                    new Employee(2, "Aedrian", 20, "male", 480111));
+        Company newCompany = new Company(companyId, "Mihoyo", employeeList);
+        Company updatedCompany = new Company(companyId, "Cerberus", employeeList);
+
+        //When
+        when(companyRepository.getCompanyById(companyId)).thenReturn(updatedCompany);
+        Company returnedCompany = companyService.updateCompanyInformation(companyId, newCompany);
+
+        //Then
+        verify(companyRepository).getCompanyById(companyId);
+        assertThat(returnedCompany, equalTo(updatedCompany));
+    }
 }

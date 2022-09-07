@@ -59,14 +59,6 @@ public class CompanyRepository {
         return maxId + 1;
     }
 
-    public Company updateCompanyInformation(Integer id, Company company) {
-        Company existingCompany = getCompanyById(id);
-        if (company.getName() != null) {
-            existingCompany.setName(company.getName());
-        }
-        return company;
-    }
-
     public void removeCompany(Integer id) {
         Company companyToBeDeleted = getCompanyById(id);
         companyList.remove(companyToBeDeleted);
