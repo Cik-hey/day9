@@ -105,4 +105,16 @@ public class EmployeeServiceTest {
         verify(employeeRepository).addNewEmployee(newEmployee);
         assertThat(returnedEmployee, equalTo(createdEmployee));
     }
+
+    @Test
+    void should_remove_employee_when_delete_given_employee_id() {
+        //Given
+        int employeeNumber = 1;
+
+        //When
+        employeeService.removeEmployeeInformation(employeeNumber);
+
+        //Then
+        verify(employeeRepository).removeEmployeeInformation(employeeNumber);
+    }
 }
