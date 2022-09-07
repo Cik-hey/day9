@@ -75,4 +75,22 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender", containsInAnyOrder("male", "male")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary", containsInAnyOrder(90111, 480111)));
     }
+
+    @Test
+    void should_return_employee_list_when_get_by_page_given_employees() throws Exception {
+        //Given
+        employeeRepository.addNewEmployee(new Employee(1, "Kate", 17, "female", 4801112));
+        employeeRepository.addNewEmployee(new Employee(2, "Aedrian", 20, "male", 480111));
+        employeeRepository.addNewEmployee(new Employee(3, "Someone", 19, "male", 90111));
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.get("/employees?page={page}&pageSize={pageSize}",1,2))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Aedrian", "Kate")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].age", containsInAnyOrder(20, 17)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender", containsInAnyOrder("male", "female")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary", containsInAnyOrder(4801112, 480111)));
+    }
 }
+
