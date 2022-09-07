@@ -50,6 +50,6 @@ public class EmployeeController {
 
     @GetMapping(params = {"page", "pageSize"})
     public List<Employee> getEmployeeByPage(@RequestParam int page, @RequestParam int pageSize) {
-        return employeeRepository.getEmployeeListByPage(page, pageSize);
+        return employeeService.getEmployeeListByPage(page, pageSize);
     }
 }

@@ -117,4 +117,22 @@ public class EmployeeServiceTest {
         //Then
         verify(employeeRepository).removeEmployeeInformation(employeeNumber);
     }
+
+    @Test
+    void should_return_employee_list_when_get_by_page_given_employees() {
+        //Given
+        final int page = 1;
+        final int pageSize = 2;
+        List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
+                                                    new Employee(2, "Aedrian", 20, "male", 480111));
+
+        //When
+        when(employeeRepository.getEmployeeListByPage(page,pageSize)).thenReturn(employeeList);
+        List<Employee> returnedEmployeeList = employeeService.getEmployeeListByPage(page, pageSize);
+
+        //Then
+        verify(employeeRepository).getEmployeeListByPage(page, pageSize);
+        assertThat(returnedEmployeeList, hasSize(2));
+        assertThat(returnedEmployeeList, equalTo(employeeList));
+    }
 }
