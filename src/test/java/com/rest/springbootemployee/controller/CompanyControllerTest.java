@@ -55,4 +55,17 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Mihoyo"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].employeeList", hasSize(2)));
     }
+
+    @Test
+    void should_return_company_when_get_by_id_given_companies() throws Exception {
+        //Given
+        companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        Company returnedCompany = companyRepository.addNewCompany(new Company(2, "KLab", employeeList));
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}", returnedCompany.getid()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("KLab"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeList", hasSize(2)));
+    }
 }

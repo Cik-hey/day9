@@ -27,7 +27,7 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public Company getSpecificCompany(@PathVariable Integer id) {
-        return companyRepository.getCompanyById(id);
+        return companyService.getCompanyById(id);
     }
 
     @GetMapping("/{id}/employees")
