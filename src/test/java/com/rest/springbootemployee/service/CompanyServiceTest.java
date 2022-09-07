@@ -100,4 +100,21 @@ public class CompanyServiceTest {
         assertThat(returnedCompanyList, hasSize(2));
         assertThat(returnedCompanyList, equalTo(companyList));
     }
+
+    @Test
+    void should_return_new_company_when_post_given_new_company() {
+        //Given
+        List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
+                                                    new Employee(2, "Aedrian", 20, "male", 480111));
+        Company newCompany = new Company(1, "Mihoyo", employeeList);
+        Company createdCompany = new Company(1, "Mihoyo", employeeList);
+
+        //When
+        when(companyRepository.addNewCompany(newCompany)).thenReturn(createdCompany);
+        Company returnedCompany = companyService.addNewCompany(newCompany);
+
+        //Then
+        verify(companyRepository).addNewCompany(newCompany);
+        assertThat(returnedCompany, equalTo(createdCompany));
+    }
 }

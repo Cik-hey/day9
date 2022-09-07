@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -97,5 +98,20 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Mihoyo", "KLab")));
+    }
+
+    @Test
+    void should_return_new_company_when_post_given_new_company() throws Exception {
+        //Given
+        Company newCompany = companyRepository.addNewCompany(new Company(1, "Mihoyo", employeeList));
+        String newCompanyJSON = new ObjectMapper().writeValueAsString(newCompany);
+
+        //When and Then
+        client.perform(MockMvcRequestBuilders.post("/companies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newCompanyJSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Mihoyo"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeList", hasSize(2)));
     }
 }
