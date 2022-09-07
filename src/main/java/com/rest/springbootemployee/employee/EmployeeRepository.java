@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Repository
 public class EmployeeRepository {
 
-    private final List<Employee> employeeList;
+    private List<Employee> employeeList;
 
     public EmployeeRepository() {
         employeeList = new ArrayList<>();
@@ -72,5 +72,9 @@ public class EmployeeRepository {
                 .skip((long) (page - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
+    }
+
+    public void clearData() {
+        employeeList = new ArrayList<>();
     }
 }
