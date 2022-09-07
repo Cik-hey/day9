@@ -23,7 +23,7 @@ public class CompanyRepository {
     public List<Company> getCompanyList() {
         return companyList;
     }
-    
+
     public Company getCompanyById(Integer id) {
         return companyList.stream()
                 .filter(company -> company.getid().equals(id))

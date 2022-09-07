@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
-
     private List<Employee> employeeList;
 
     public EmployeeRepository() {
@@ -21,7 +20,6 @@ public class EmployeeRepository {
     }
 
     public List<Employee> getAll() {
-
         return employeeList;
     }
 

@@ -2,7 +2,6 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.EmployeeRepository;
-import com.rest.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
-
     @Mock
     EmployeeRepository employeeRepository;
     @InjectMocks
@@ -83,7 +81,7 @@ public class EmployeeServiceTest {
         //Given
         final String employeesGender = "female";
         List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, employeesGender, 4801112),
-                                                    new Employee(3, "Taylor", 19, employeesGender, 90111));
+                new Employee(3, "Taylor", 19, employeesGender, 90111));
         //When
         when(employeeRepository.getAllByGender(employeesGender)).thenReturn(employeeList);
         List<Employee> returnedEmployeeList = employeeService.getAllByGender(employeesGender);
@@ -95,7 +93,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_put_given_new_employee() {
+    void should_return_new_employee_when_post_given_new_employee() {
         //Given
         Employee newEmployee = new Employee(1, "Kate", 17, "female", 4801112);
         Employee createdEmployee = new Employee(1, "Kate", 17, "female", 4801112);
@@ -127,10 +125,10 @@ public class EmployeeServiceTest {
         final int page = 1;
         final int pageSize = 2;
         List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
-                                                    new Employee(2, "Aedrian", 20, "male", 480111));
+                new Employee(2, "Aedrian", 20, "male", 480111));
 
         //When
-        when(employeeRepository.getEmployeeListByPage(page,pageSize)).thenReturn(employeeList);
+        when(employeeRepository.getEmployeeListByPage(page, pageSize)).thenReturn(employeeList);
         List<Employee> returnedEmployeeList = employeeService.getEmployeeListByPage(page, pageSize);
 
         //Then

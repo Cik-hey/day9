@@ -21,28 +21,23 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CompanyControllerTest {
-
     @Autowired
     MockMvc client;
-
     @Autowired
     CompanyRepository companyRepository;
-
     @Autowired
     CompanyService companyService;
-
     List<Employee> employeeList = new ArrayList<>();
 
     @BeforeEach
     void clearAll() {
         companyRepository.clearData();
         this.employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
-                                          new Employee(2, "Aedrian", 20, "male", 480111));
+                new Employee(2, "Aedrian", 20, "male", 480111));
     }
 
     @Test
@@ -94,7 +89,7 @@ public class CompanyControllerTest {
         companyRepository.addNewCompany(new Company(2, "Cerberus", employeeList));
 
         //When and Then
-        client.perform(MockMvcRequestBuilders.get("/companies?page={page}&pageSize={pageSize}", 1,2))
+        client.perform(MockMvcRequestBuilders.get("/companies?page={page}&pageSize={pageSize}", 1, 2))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Mihoyo", "KLab")));
@@ -108,8 +103,8 @@ public class CompanyControllerTest {
 
         //When and Then
         client.perform(MockMvcRequestBuilders.post("/companies")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(newCompanyJSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newCompanyJSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Mihoyo"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeList", hasSize(2)));

@@ -22,13 +22,10 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class EmployeeControllerTest {
-
     @Autowired
     MockMvc client;
-
     @Autowired
     EmployeeRepository employeeRepository;
-
     @Autowired
     EmployeeService employeeService;
 
@@ -92,7 +89,7 @@ public class EmployeeControllerTest {
         employeeService.addNewEmployee(new Employee(3, "Someone", 19, "male", 90111));
 
         //When and Then
-        client.perform(MockMvcRequestBuilders.get("/employees?page={page}&pageSize={pageSize}",1,2))
+        client.perform(MockMvcRequestBuilders.get("/employees?page={page}&pageSize={pageSize}", 1, 2))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", containsInAnyOrder("Aedrian", "Kate")))
@@ -109,8 +106,8 @@ public class EmployeeControllerTest {
 
         //When
         client.perform(MockMvcRequestBuilders.post("/employees")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(newEmployeeJSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newEmployeeJSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Kate"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(17))
