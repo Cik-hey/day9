@@ -107,6 +107,12 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Mihoyo"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeList", hasSize(2)));
+
+        //Then
+        Company resultCompany = companyService.getCompanyById(newCompany.getid());
+        assertThat(resultCompany.getName(), equalTo("Mihoyo"));
+        assertThat(resultCompany.getEmployeeList(), equalTo(employeeList));
+        assertThat(resultCompany.getEmployeeList(), hasSize(2));
     }
 
     @Test
@@ -116,12 +122,18 @@ public class CompanyControllerTest {
         Company updatedCompany = new Company(1, "Cerberus", employeeList);
         String updatedCompanyJSON = new ObjectMapper().writeValueAsString(updatedCompany);
 
-        //When and Then
+        //When
         client.perform(MockMvcRequestBuilders.put("/companies/{id}", newCompany.getid())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updatedCompanyJSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Cerberus"));
+
+        //Then
+        Company resultCompany = companyService.getCompanyById(newCompany.getid());
+        assertThat(resultCompany.getName(), equalTo("Cerberus"));
+        assertThat(resultCompany.getEmployeeList(), equalTo(employeeList));
+        assertThat(resultCompany.getEmployeeList(), hasSize(2));
     }
 
     @Test
@@ -129,10 +141,11 @@ public class CompanyControllerTest {
         //Given
         Company companyToBeDeleted = companyService.addNewCompany(new Company(1, "Mihoyo", employeeList));
 
-        //When and Then
+        //When
         client.perform(MockMvcRequestBuilders.delete("/companies/{id}", companyToBeDeleted.getid()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
+        //Then
         assertThat(companyService.getCompanyList(), empty());
     }
 }
