@@ -73,8 +73,4 @@ public class EmployeeRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
-
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
 }
