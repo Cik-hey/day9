@@ -12,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -68,14 +69,14 @@ public class EmployeeServiceTest {
     void should_return_employee_when_get_by_id_given_employees() {
         //Given
         final int employeeId = 1;
-        Employee employee = new Employee(employeeId, "Kate", 17, "female", 4801112);
+        Optional<Employee> employee = Optional.of(new Employee(employeeId, "Kate", 17, "female", 4801112));
 
         //When
-        when(employeeRepository.findById(employeeId)).thenReturn(employee);
+        when(jpaEmployeeRepository.findById(employeeId)).thenReturn(employee);
         Employee returnedEmployee = employeeService.findById(employeeId);
 
         //Then
-        verify(employeeRepository).findById(employeeId);
+        verify(jpaEmployeeRepository).findById(employeeId);
         assertThat(returnedEmployee, equalTo(returnedEmployee));
     }
 

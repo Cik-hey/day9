@@ -1,6 +1,7 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exceptionlist.NoEmployeeFoundException;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,8 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer id) {
-        return employeeRepository.findById(id);
+        return jpaEmployeeRepository.findById(id)
+                .orElseThrow(NoEmployeeFoundException::new);
     }
 
     public List<Employee> getAllByGender(String gender) {
