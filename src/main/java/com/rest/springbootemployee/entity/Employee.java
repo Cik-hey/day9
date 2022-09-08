@@ -1,11 +1,22 @@
 package com.rest.springbootemployee.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    final private String name;
+    private String name;
     private Integer age;
-    final private String gender;
+    private String gender;
     private Integer salary;
+
+    public Employee() {
+    }
 
     public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
         this.id = id;
