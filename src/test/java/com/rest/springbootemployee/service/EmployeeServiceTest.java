@@ -54,11 +54,11 @@ public class EmployeeServiceTest {
         Employee newEmployeeInfo = new Employee(employeeId, "Katey", 18, "male", 4812345);
 
         //When
-        when(employeeRepository.findById(employeeId)).thenReturn(originalEmployee);
+        when(jpaEmployeeRepository.findById(employeeId)).thenReturn(Optional.of(originalEmployee));
         Employee updatedEmployee = employeeService.updateEmployee(employeeId, newEmployeeInfo);
 
         //Then
-        verify(employeeRepository).findById(employeeId);
+        verify(jpaEmployeeRepository).findById(employeeId);
         assertThat(updatedEmployee.getName(), equalTo("Kate"));
         assertThat(updatedEmployee.getAge(), equalTo(18));
         assertThat(updatedEmployee.getGender(), equalTo("female"));

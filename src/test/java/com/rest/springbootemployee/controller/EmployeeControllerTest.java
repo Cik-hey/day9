@@ -130,7 +130,7 @@ public class EmployeeControllerTest {
     @Test
     void should_return_updated_employee_when_put_given_new_employee() throws Exception {
         //Given
-        Employee newEmployee = employeeService.addNewEmployee(new Employee(2, "Aedrian", 20, "male", 480111));
+        Employee newEmployee = jpaEmployeeRepository.save(new Employee(2, "Aedrian", 20, "male", 480111));
         Employee updatedEmployee = new Employee(2, "Kate", 21, "female", 4801112);
 
         String updatedEmployeeJson = new ObjectMapper().writeValueAsString(updatedEmployee);
@@ -147,12 +147,12 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(4801112));
 
         //Then
-//        List<Employee> employeeList = employeeService.getAll();
-//        final Employee newEmployeeTest = employeeList.get(0);
-//        assertThat(newEmployeeTest.getName(), equalTo("Aedrian"));
-//        assertThat(newEmployeeTest.getAge(), equalTo(21));
-//        assertThat(newEmployeeTest.getGender(), equalTo("male"));
-//        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
+        List<Employee> employeeList = jpaEmployeeRepository.findAll();
+        final Employee newEmployeeTest = employeeList.get(0);
+        assertThat(newEmployeeTest.getName(), equalTo("Aedrian"));
+        assertThat(newEmployeeTest.getAge(), equalTo(21));
+        assertThat(newEmployeeTest.getGender(), equalTo("male"));
+        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
     }
 
 //    @Test

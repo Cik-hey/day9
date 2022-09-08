@@ -24,13 +24,15 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Integer id, Employee employee) {
-        Employee existingEmployee = employeeRepository.findById(id);
+        Employee existingEmployee = jpaEmployeeRepository.findById(id)
+                .orElseThrow(NoEmployeeFoundException::new);
         if (employee.getAge() != null) {
             existingEmployee.setAge(employee.getAge());
         }
         if (employee.getSalary() != null) {
             existingEmployee.setSalary(employee.getSalary());
         }
+        jpaEmployeeRepository.save(existingEmployee);
         return existingEmployee;
     }
 
