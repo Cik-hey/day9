@@ -15,9 +15,9 @@ public class CompanyRepository {
 
     public CompanyRepository() {
         companyList = new ArrayList<>();
-        EmployeeRepository employeeRepository = new EmployeeRepository();
-        companyList.add(new Company(1, "Mihoyo", employeeRepository.getAll()));
-        companyList.add(new Company(2, "KLab", employeeRepository.getAll()));
+//        EmployeeRepository employeeRepository = new EmployeeRepository();
+//        companyList.add(new Company(1, "Mihoyo", employeeRepository.getAll()));
+//        companyList.add(new Company(2, "KLab", employeeRepository.getAll()));
     }
 
     public List<Company> getCompanyList() {
