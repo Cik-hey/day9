@@ -103,11 +103,11 @@ public class EmployeeServiceTest {
         Employee createdEmployee = new Employee(1, "Kate", 17, "female", 4801112);
 
         //When
-        when(employeeRepository.addNewEmployee(newEmployee)).thenReturn(createdEmployee);
+        when(jpaEmployeeRepository.save(newEmployee)).thenReturn(createdEmployee);
         Employee returnedEmployee = employeeService.addNewEmployee(newEmployee);
 
         //Then
-        verify(employeeRepository).addNewEmployee(newEmployee);
+        verify(jpaEmployeeRepository).save(newEmployee);
         assertThat(returnedEmployee, equalTo(createdEmployee));
     }
 

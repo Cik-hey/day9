@@ -36,6 +36,7 @@ public class EmployeeControllerTest {
     @BeforeEach
     void cleanRepository() {
         employeeRepository.clearData();
+        jpaEmployeeRepository.deleteAll();
     }
 
     @Test
@@ -119,12 +120,12 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(4801112));
 
         //Then
-//        List<Employee> employeeList = employeeService.getAll();
-//        final Employee newEmployeeTest = employeeList.get(0);
-//        assertThat(newEmployeeTest.getName(), equalTo("Kate"));
-//        assertThat(newEmployeeTest.getAge(), equalTo(17));
-//        assertThat(newEmployeeTest.getGender(), equalTo("female"));
-//        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
+        List<Employee> employeeList = jpaEmployeeRepository.findAll();
+        final Employee newEmployeeTest = employeeList.get(0);
+        assertThat(newEmployeeTest.getName(), equalTo("Kate"));
+        assertThat(newEmployeeTest.getAge(), equalTo(17));
+        assertThat(newEmployeeTest.getGender(), equalTo("female"));
+        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
     }
 
     @Test
