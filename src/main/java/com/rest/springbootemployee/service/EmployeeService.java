@@ -18,7 +18,8 @@ public class EmployeeService {
     }
 
     public List<Employee> getAll() {
-        return employeeRepository.getAll();
+        return jpaEmployeeRepository.findAll();
+//        return employeeRepository.getAll();
     }
 
     public Employee updateEmployee(Integer id, Employee employee) {
