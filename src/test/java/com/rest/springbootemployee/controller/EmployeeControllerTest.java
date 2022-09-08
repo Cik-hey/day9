@@ -36,6 +36,7 @@ public class EmployeeControllerTest {
     @BeforeEach
     void cleanRepository() {
         employeeRepository.clearData();
+        jpaEmployeeRepository.deleteAll();
     }
 
     @Test
@@ -72,9 +73,9 @@ public class EmployeeControllerTest {
     @Test
     void should_return_employee_list_when_get_by_gender_given_employees() throws Exception {
         //Given
-        employeeService.addNewEmployee(new Employee(1, "Kate", 17, "female", 480111));
-        employeeService.addNewEmployee(new Employee(2, "Aedrian", 17, "male", 480111));
-        employeeService.addNewEmployee(new Employee(3, "Someone", 19, "male", 90111));
+        jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 480111));
+        jpaEmployeeRepository.save(new Employee(2, "Aedrian", 17, "male", 480111));
+        jpaEmployeeRepository.save(new Employee(3, "Someone", 19, "male", 90111));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/employees?gender={gender}", "male"))
@@ -119,18 +120,18 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(4801112));
 
         //Then
-//        List<Employee> employeeList = employeeService.getAll();
-//        final Employee newEmployeeTest = employeeList.get(0);
-//        assertThat(newEmployeeTest.getName(), equalTo("Kate"));
-//        assertThat(newEmployeeTest.getAge(), equalTo(17));
-//        assertThat(newEmployeeTest.getGender(), equalTo("female"));
-//        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
+        List<Employee> employeeList = jpaEmployeeRepository.findAll();
+        final Employee newEmployeeTest = employeeList.get(0);
+        assertThat(newEmployeeTest.getName(), equalTo("Kate"));
+        assertThat(newEmployeeTest.getAge(), equalTo(17));
+        assertThat(newEmployeeTest.getGender(), equalTo("female"));
+        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
     }
 
     @Test
     void should_return_updated_employee_when_put_given_new_employee() throws Exception {
         //Given
-        Employee newEmployee = employeeService.addNewEmployee(new Employee(2, "Aedrian", 20, "male", 480111));
+        Employee newEmployee = jpaEmployeeRepository.save(new Employee(2, "Aedrian", 20, "male", 480111));
         Employee updatedEmployee = new Employee(2, "Kate", 21, "female", 4801112);
 
         String updatedEmployeeJson = new ObjectMapper().writeValueAsString(updatedEmployee);
@@ -147,26 +148,26 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(4801112));
 
         //Then
-//        List<Employee> employeeList = employeeService.getAll();
-//        final Employee newEmployeeTest = employeeList.get(0);
-//        assertThat(newEmployeeTest.getName(), equalTo("Aedrian"));
-//        assertThat(newEmployeeTest.getAge(), equalTo(21));
-//        assertThat(newEmployeeTest.getGender(), equalTo("male"));
-//        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
+        List<Employee> employeeList = jpaEmployeeRepository.findAll();
+        final Employee newEmployeeTest = employeeList.get(0);
+        assertThat(newEmployeeTest.getName(), equalTo("Aedrian"));
+        assertThat(newEmployeeTest.getAge(), equalTo(21));
+        assertThat(newEmployeeTest.getGender(), equalTo("male"));
+        assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
     }
 
-//    @Test
-//    void should_remove_employee_when_delete_given_employee_id() throws Exception {
-//        //Given
-//        jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 4801112));
-//
-//        //When
-//        client.perform(MockMvcRequestBuilders.delete("/employees/{id}", 2))
-//                .andExpect(MockMvcResultMatchers.status().isNoContent());
-//
-//        //Then
-//        assertThat(employeeRepository.getAll(), empty());
-//    }
+    @Test
+    void should_remove_employee_when_delete_given_employee_id() throws Exception {
+        //Given
+        Employee employeeToBeDeleted = jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 4801112));
+
+        //When
+        client.perform(MockMvcRequestBuilders.delete("/employees/{id}", employeeToBeDeleted.getid()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        //Then
+        assertThat(jpaEmployeeRepository.findAll(), empty());
+    }
 
     @Test
     void should_return_404_when_perform_get_by_id_given_id_not_exist () throws Exception {

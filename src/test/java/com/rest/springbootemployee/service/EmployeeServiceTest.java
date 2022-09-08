@@ -54,11 +54,11 @@ public class EmployeeServiceTest {
         Employee newEmployeeInfo = new Employee(employeeId, "Katey", 18, "male", 4812345);
 
         //When
-        when(employeeRepository.findById(employeeId)).thenReturn(originalEmployee);
+        when(jpaEmployeeRepository.findById(employeeId)).thenReturn(Optional.of(originalEmployee));
         Employee updatedEmployee = employeeService.updateEmployee(employeeId, newEmployeeInfo);
 
         //Then
-        verify(employeeRepository).findById(employeeId);
+        verify(jpaEmployeeRepository).findById(employeeId);
         assertThat(updatedEmployee.getName(), equalTo("Kate"));
         assertThat(updatedEmployee.getAge(), equalTo(18));
         assertThat(updatedEmployee.getGender(), equalTo("female"));
@@ -87,11 +87,11 @@ public class EmployeeServiceTest {
         List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, employeesGender, 4801112),
                 new Employee(3, "Taylor", 19, employeesGender, 90111));
         //When
-        when(employeeRepository.getAllByGender(employeesGender)).thenReturn(employeeList);
+        when(jpaEmployeeRepository.findByGender(employeesGender)).thenReturn(employeeList);
         List<Employee> returnedEmployeeList = employeeService.getAllByGender(employeesGender);
 
         //Then
-        verify(employeeRepository).getAllByGender(employeesGender);
+        verify(jpaEmployeeRepository).findByGender(employeesGender);
         assertThat(returnedEmployeeList, hasSize(2));
         assertThat(returnedEmployeeList, equalTo(employeeList));
     }
@@ -103,11 +103,11 @@ public class EmployeeServiceTest {
         Employee createdEmployee = new Employee(1, "Kate", 17, "female", 4801112);
 
         //When
-        when(employeeRepository.addNewEmployee(newEmployee)).thenReturn(createdEmployee);
+        when(jpaEmployeeRepository.save(newEmployee)).thenReturn(createdEmployee);
         Employee returnedEmployee = employeeService.addNewEmployee(newEmployee);
 
         //Then
-        verify(employeeRepository).addNewEmployee(newEmployee);
+        verify(jpaEmployeeRepository).save(newEmployee);
         assertThat(returnedEmployee, equalTo(createdEmployee));
     }
 
@@ -115,12 +115,15 @@ public class EmployeeServiceTest {
     void should_remove_employee_when_delete_given_employee_id() {
         //Given
         int employeeNumber = 1;
+        Employee employee = new Employee(1, "Kate", 17, "female", 4801112);
 
+        when(jpaEmployeeRepository.findById(employeeNumber)).thenReturn(Optional.of(employee));
         //When
         employeeService.removeEmployeeInformation(employeeNumber);
 
         //Then
-        verify(employeeRepository).removeEmployeeInformation(employeeNumber);
+        verify(jpaEmployeeRepository).findById(employeeNumber);
+        verify(jpaEmployeeRepository).delete(employee);
     }
 
     @Test

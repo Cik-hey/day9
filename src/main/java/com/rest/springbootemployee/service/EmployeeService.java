@@ -24,13 +24,15 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Integer id, Employee employee) {
-        Employee existingEmployee = employeeRepository.findById(id);
+        Employee existingEmployee = jpaEmployeeRepository.findById(id)
+                .orElseThrow(NoEmployeeFoundException::new);
         if (employee.getAge() != null) {
             existingEmployee.setAge(employee.getAge());
         }
         if (employee.getSalary() != null) {
             existingEmployee.setSalary(employee.getSalary());
         }
+        jpaEmployeeRepository.save(existingEmployee);
         return existingEmployee;
     }
 
@@ -40,15 +42,16 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllByGender(String gender) {
-        return employeeRepository.getAllByGender(gender);
+        return jpaEmployeeRepository.findByGender(gender);
     }
 
     public Employee addNewEmployee(Employee newEmployee) {
-        return employeeRepository.addNewEmployee(newEmployee);
+        return jpaEmployeeRepository.save(newEmployee);
     }
 
     public void removeEmployeeInformation(Integer id) {
-        employeeRepository.removeEmployeeInformation(id);
+        jpaEmployeeRepository.delete(jpaEmployeeRepository.findById(id)
+                .orElseThrow(NoEmployeeFoundException::new));
     }
 
     public List<Employee> getEmployeeListByPage(int page, int pageSize) {
