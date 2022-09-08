@@ -89,9 +89,9 @@ public class EmployeeControllerTest {
     @Test
     void should_return_employee_list_when_get_by_page_given_employees() throws Exception {
         //Given
-        employeeService.addNewEmployee(new Employee(1, "Kate", 17, "female", 4801112));
-        employeeService.addNewEmployee(new Employee(2, "Aedrian", 20, "male", 480111));
-        employeeService.addNewEmployee(new Employee(3, "Someone", 19, "male", 90111));
+        jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 4801112));
+        jpaEmployeeRepository.save(new Employee(2, "Aedrian", 20, "male", 480111));
+        jpaEmployeeRepository.save(new Employee(3, "Someone", 19, "male", 90111));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/employees?page={page}&pageSize={pageSize}", 1, 2))

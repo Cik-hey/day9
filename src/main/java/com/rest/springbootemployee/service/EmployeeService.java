@@ -4,6 +4,7 @@ import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exceptionlist.NoEmployeeFoundException;
 import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeListByPage(int page, int pageSize) {
-        return employeeRepository.getEmployeeListByPage(page, pageSize);
+        PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
+        return jpaEmployeeRepository.findAll(pageRequest).toList();
     }
 }

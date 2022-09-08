@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -134,12 +137,16 @@ public class EmployeeServiceTest {
         List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, "female", 4801112),
                 new Employee(2, "Aedrian", 20, "male", 480111));
 
+        PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
+        Page pageEmployee = new PageImpl(employeeList);
+        when(jpaEmployeeRepository.findAll(pageRequest)).thenReturn(pageEmployee);
+
         //When
-        when(employeeRepository.getEmployeeListByPage(page, pageSize)).thenReturn(employeeList);
+
         List<Employee> returnedEmployeeList = employeeService.getEmployeeListByPage(page, pageSize);
 
         //Then
-        verify(employeeRepository).getEmployeeListByPage(page, pageSize);
+        verify(jpaEmployeeRepository).findAll(pageRequest);
         assertThat(returnedEmployeeList, hasSize(2));
         assertThat(returnedEmployeeList, equalTo(employeeList));
     }
