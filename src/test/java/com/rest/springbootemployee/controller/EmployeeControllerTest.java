@@ -7,7 +7,6 @@ import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import com.rest.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,8 +27,6 @@ public class EmployeeControllerTest {
     MockMvc client;
     @Autowired
     EmployeeRepository employeeRepository;
-    @Autowired
-    EmployeeService employeeService;
     @Autowired
     JpaEmployeeRepository jpaEmployeeRepository;
 

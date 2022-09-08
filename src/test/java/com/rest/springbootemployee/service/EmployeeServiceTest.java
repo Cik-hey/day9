@@ -26,8 +26,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
     @Mock
-    EmployeeRepository employeeRepository;
-    @Mock
     JpaEmployeeRepository jpaEmployeeRepository;
     @InjectMocks
     EmployeeService employeeService;

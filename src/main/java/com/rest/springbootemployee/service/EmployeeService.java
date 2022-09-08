@@ -2,7 +2,6 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exceptionlist.NoEmployeeFoundException;
-import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.repository.JpaEmployeeRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,17 +10,13 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-
-    private EmployeeRepository employeeRepository;
-    private JpaEmployeeRepository jpaEmployeeRepository;
-    public EmployeeService(EmployeeRepository employeeRepository, JpaEmployeeRepository jpaEmployeeRepository) {
-        this.employeeRepository = employeeRepository;
+    private final JpaEmployeeRepository jpaEmployeeRepository;
+    public EmployeeService( JpaEmployeeRepository jpaEmployeeRepository) {
         this.jpaEmployeeRepository = jpaEmployeeRepository;
     }
 
     public List<Employee> getAll() {
         return jpaEmployeeRepository.findAll();
-//        return employeeRepository.getAll();
     }
 
     public Employee updateEmployee(Integer id, Employee employee) {
