@@ -12,11 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private final CompanyRepository companyRepository;
     private final CompanyService companyService;
 
-    public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
-        this.companyRepository = companyRepository;
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
 
