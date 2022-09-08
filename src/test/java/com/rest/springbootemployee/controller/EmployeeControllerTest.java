@@ -163,5 +163,31 @@ public class EmployeeControllerTest {
         //Then
         assertThat(employeeService.getAll(), empty());
     }
+
+    @Test
+    void should_return_404_when_perform_get_by_id_given_id_not_exist () throws Exception {
+        //When and Then
+        client.perform(MockMvcRequestBuilders.get("/employees/999"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void should_return_404_when_perform_put_by_id_given_id_not_exist () throws Exception {
+        //Given
+        Employee updatedEmployee = new Employee(10, "Jim", 20, "Male", 55000);
+        String updatedEmployeeJSON = new ObjectMapper().writeValueAsString(updatedEmployee);
+        //When
+        client.perform(MockMvcRequestBuilders.put("/employees/999")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updatedEmployeeJSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void should_return_404_when_perform_delete_by_id_given_id_not_exist () throws Exception {
+        //When and Then
+        client.perform(MockMvcRequestBuilders.delete("/employees/999"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }
 
