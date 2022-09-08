@@ -42,7 +42,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllByGender(String gender) {
-        return employeeRepository.getAllByGender(gender);
+        return jpaEmployeeRepository.findByGender(gender);
     }
 
     public Employee addNewEmployee(Employee newEmployee) {

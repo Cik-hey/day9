@@ -87,11 +87,11 @@ public class EmployeeServiceTest {
         List<Employee> employeeList = Arrays.asList(new Employee(1, "Kate", 17, employeesGender, 4801112),
                 new Employee(3, "Taylor", 19, employeesGender, 90111));
         //When
-        when(employeeRepository.getAllByGender(employeesGender)).thenReturn(employeeList);
+        when(jpaEmployeeRepository.findByGender(employeesGender)).thenReturn(employeeList);
         List<Employee> returnedEmployeeList = employeeService.getAllByGender(employeesGender);
 
         //Then
-        verify(employeeRepository).getAllByGender(employeesGender);
+        verify(jpaEmployeeRepository).findByGender(employeesGender);
         assertThat(returnedEmployeeList, hasSize(2));
         assertThat(returnedEmployeeList, equalTo(employeeList));
     }
