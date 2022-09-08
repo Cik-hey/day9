@@ -69,10 +69,10 @@ public class EmployeeServiceTest {
     void should_return_employee_when_get_by_id_given_employees() {
         //Given
         final int employeeId = 1;
-        Optional<Employee> employee = Optional.of(new Employee(employeeId, "Kate", 17, "female", 4801112));
+        Employee employee = new Employee(employeeId, "Kate", 17, "female", 4801112);
 
         //When
-        when(jpaEmployeeRepository.findById(employeeId)).thenReturn(employee);
+        when(jpaEmployeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
         Employee returnedEmployee = employeeService.findById(employeeId);
 
         //Then
