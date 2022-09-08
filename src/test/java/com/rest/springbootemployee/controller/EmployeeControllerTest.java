@@ -57,7 +57,7 @@ public class EmployeeControllerTest {
     @Test
     void should_return_employee_when_get_by_id_given_employees() throws Exception {
         //Given
-        Employee createdEmployee = employeeService.addNewEmployee(new Employee(1, "Kate", 17, "female", 480111));
+        Employee createdEmployee = jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 480111));
 
         //When and Then
         client.perform(MockMvcRequestBuilders.get("/employees/{id}", createdEmployee.getid()))
