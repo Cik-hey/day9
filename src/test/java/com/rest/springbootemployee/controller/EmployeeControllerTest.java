@@ -156,18 +156,18 @@ public class EmployeeControllerTest {
         assertThat(newEmployeeTest.getSalary(), equalTo(4801112));
     }
 
-//    @Test
-//    void should_remove_employee_when_delete_given_employee_id() throws Exception {
-//        //Given
-//        jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 4801112));
-//
-//        //When
-//        client.perform(MockMvcRequestBuilders.delete("/employees/{id}", 2))
-//                .andExpect(MockMvcResultMatchers.status().isNoContent());
-//
-//        //Then
-//        assertThat(employeeRepository.getAll(), empty());
-//    }
+    @Test
+    void should_remove_employee_when_delete_given_employee_id() throws Exception {
+        //Given
+        Employee employeeToBeDeleted = jpaEmployeeRepository.save(new Employee(1, "Kate", 17, "female", 4801112));
+
+        //When
+        client.perform(MockMvcRequestBuilders.delete("/employees/{id}", employeeToBeDeleted.getid()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        //Then
+        assertThat(jpaEmployeeRepository.findAll(), empty());
+    }
 
     @Test
     void should_return_404_when_perform_get_by_id_given_id_not_exist () throws Exception {

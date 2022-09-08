@@ -50,7 +50,8 @@ public class EmployeeService {
     }
 
     public void removeEmployeeInformation(Integer id) {
-        employeeRepository.removeEmployeeInformation(id);
+        jpaEmployeeRepository.delete(jpaEmployeeRepository.findById(id)
+                .orElseThrow(NoEmployeeFoundException::new));
     }
 
     public List<Employee> getEmployeeListByPage(int page, int pageSize) {

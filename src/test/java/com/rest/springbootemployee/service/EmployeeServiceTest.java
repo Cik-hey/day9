@@ -115,12 +115,15 @@ public class EmployeeServiceTest {
     void should_remove_employee_when_delete_given_employee_id() {
         //Given
         int employeeNumber = 1;
+        Employee employee = new Employee(1, "Kate", 17, "female", 4801112);
 
+        when(jpaEmployeeRepository.findById(employeeNumber)).thenReturn(Optional.of(employee));
         //When
         employeeService.removeEmployeeInformation(employeeNumber);
 
         //Then
-        verify(employeeRepository).removeEmployeeInformation(employeeNumber);
+        verify(jpaEmployeeRepository).findById(employeeNumber);
+        verify(jpaEmployeeRepository).delete(employee);
     }
 
     @Test
